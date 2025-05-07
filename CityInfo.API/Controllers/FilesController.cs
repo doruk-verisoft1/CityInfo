@@ -40,7 +40,6 @@ namespace CityInfo.API.Controllers
 
         public async Task<ActionResult> CreateFile(IFormFile file)
         {
-            //aplication/data data kısmına ne yazdığına göre algıladığı şey değişir
             if (file.Length == 0 || file.Length > 20971520 
                 ||  file.ContentType != "application/pdf")
             {
