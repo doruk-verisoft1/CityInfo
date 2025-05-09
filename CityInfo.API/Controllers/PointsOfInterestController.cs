@@ -11,17 +11,16 @@ namespace CityInfo.API.Controllers
     public class PointsOfInterestController : ControllerBase
     {
         private readonly ILogger<PointsOfInterestController> _logger;
-        private readonly LocalMainServices localMailService;
+        private readonly IMailService _mailService;
+        private readonly CitiesDataStore _citiesDataStore;
 
         public PointsOfInterestController(ILogger<PointsOfInterestController> logger,
-            LocalMainServices mailService)
+            IMailService mailService,
+            CitiesDataStore citiesDataStore)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _localMailService = localMailService ?? throw new ArgumentNullException(nameof(localMailService);
-        }
-        {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.localMailService = localMailService;
+            _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
+            _citiesDataStore = citiesDataStore ?? throw new ArgumentNullException(nameof(citiesDataStore));
         }
 
 
@@ -30,7 +29,7 @@ namespace CityInfo.API.Controllers
         {   
             try
             {                
-                var city = CitiesDataStore.Current.Cities
+                var city = _citiesDataStore.Cities
                     .FirstOrDefault(c => c.Id == cityId);
 
                 if (city == null)
@@ -55,7 +54,7 @@ namespace CityInfo.API.Controllers
         public ActionResult<PointOfInterestDto> GetPointOfInterest(
             int cityId, int pointOfInterestId)
         {
-            var city = CitiesDataStore.Current.Cities
+            var city = _citiesDataStore.Cities
                 .FirstOrDefault(c => c.Id == cityId);
             if (city == null)
             {
@@ -76,13 +75,13 @@ namespace CityInfo.API.Controllers
             int cityId,
             PointOfInterestForCreationDto pointOfInterest)
         {
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city == null)
             {
                 return NotFound();
             }
 
-            var maxPointOfInterestId = CitiesDataStore.Current.Cities.SelectMany(
+            var maxPointOfInterestId = _citiesDataStore.Cities.SelectMany(
                              c => c.PointsOfInterest).Max(p => p.Id);
 
             var finalPointOfInterest = new PointOfInterestDto()
@@ -108,7 +107,7 @@ namespace CityInfo.API.Controllers
         public ActionResult UptadePointOfInterest(int cityId, int pointOfInterestId,
             PointOfInterestForUptadeDto pointOfInterest)
         {
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city == null)
             {
                 return NotFound();
@@ -133,7 +132,7 @@ namespace CityInfo.API.Controllers
             int cityId, int pointOfInterestId,
             JsonPatchDocument<PointOfInterestForUptadeDto> patchDocument)
         {
-            var city = CitiesDataStore.Current.Cities
+            var city = _citiesDataStore.Cities
                 .FirstOrDefault (c => c.Id == cityId);
             if (city == null) 
             {
@@ -176,7 +175,7 @@ namespace CityInfo.API.Controllers
 
         public ActionResult DeletePointOfInterest(int cityId, int pointOfInterestId)
         {
-            var city = CitiesDataStore.Current.Cities
+            var city = _citiesDataStore.Cities
                 .FirstOrDefault(c => c.Id == cityId);
             if (city == null)
             {
@@ -191,6 +190,10 @@ namespace CityInfo.API.Controllers
             }
 
             city.PointsOfInterest.Remove(pointOfInterestFromStore);
+
+            _mailService.Send("Point of interest deleted.",
+                $"Point of interest {pointOfInterestFromStore.Name} with id {pointOfInterestFromStore.Id} was deleted.");
+
             return NoContent();
         }
     }
