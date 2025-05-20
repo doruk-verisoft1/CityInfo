@@ -17,22 +17,22 @@ namespace CityInfo.API.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "The one with that big park", "New York City" },
-                    { 2, "The one with that train station", "Antwrep" },
-                    { 3, "The one with that tower", "Paris" }
+                    { 1, "The one with that big park.", "New York City" },
+                    { 2, "The one with the cathedral that was never really finished.", "Antwerp" },
+                    { 3, "The one with that big tower.", "Paris" }
                 });
 
             migrationBuilder.InsertData(
-                table: "PointOfInterests",
+                table: "PointsOfInterest",
                 columns: new[] { "Id", "CityId", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, "The most visited urban parks", "Central Park" },
-                    { 2, 1, "Big skyscraper", "Empire State Building" },
-                    { 3, 2, "Gothic style cathedral", "Cathedral" },
-                    { 4, 2, "Antrwrep biggest station", "Antwrep Central Station" },
-                    { 5, 3, "Big tower", "Eiffel Tower" },
-                    { 6, 3, "Largest museum", "The Louvre" }
+                    { 1, 1, "The most visited urban park in the United States.", "Central Park" },
+                    { 2, 1, "A 102-story skyscraper located in Midtown Manhattan.", "Empire State Building" },
+                    { 3, 2, "A Gothic style cathedral, conceived by architects Jan and Pieter Appelmans.", "Cathedral" },
+                    { 4, 2, "The the finest example of railway architecture in Belgium.", "Antwerp Central Station" },
+                    { 5, 3, "A wrought iron lattice tower on the Champ de Mars, named after engineer Gustave Eiffel.", "Eiffel Tower" },
+                    { 6, 3, "The world's largest museum.", "The Louvre" }
                 });
         }
 
@@ -40,32 +40,32 @@ namespace CityInfo.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
-                table: "PointOfInterests",
+                table: "PointsOfInterest",
                 keyColumn: "Id",
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
-                table: "PointOfInterests",
+                table: "PointsOfInterest",
                 keyColumn: "Id",
                 keyValue: 2);
 
             migrationBuilder.DeleteData(
-                table: "PointOfInterests",
+                table: "PointsOfInterest",
                 keyColumn: "Id",
                 keyValue: 3);
 
             migrationBuilder.DeleteData(
-                table: "PointOfInterests",
+                table: "PointsOfInterest",
                 keyColumn: "Id",
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
-                table: "PointOfInterests",
+                table: "PointsOfInterest",
                 keyColumn: "Id",
                 keyValue: 5);
 
             migrationBuilder.DeleteData(
-                table: "PointOfInterests",
+                table: "PointsOfInterest",
                 keyColumn: "Id",
                 keyValue: 6);
 

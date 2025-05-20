@@ -25,7 +25,7 @@ namespace CityInfo.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PointOfInterests",
+                name: "PointsOfInterest",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -35,9 +35,9 @@ namespace CityInfo.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PointOfInterests", x => x.Id);
+                    table.PrimaryKey("PK_PointsOfInterest", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PointOfInterests_Cities_CityId",
+                        name: "FK_PointsOfInterest_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
@@ -45,8 +45,8 @@ namespace CityInfo.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PointOfInterests_CityId",
-                table: "PointOfInterests",
+                name: "IX_PointsOfInterest_CityId",
+                table: "PointsOfInterest",
                 column: "CityId");
         }
 
@@ -54,7 +54,7 @@ namespace CityInfo.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PointOfInterests");
+                name: "PointsOfInterest");
 
             migrationBuilder.DropTable(
                 name: "Cities");
