@@ -5,3 +5,12 @@
 
 
 GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+
+###
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Accept:application/xml
+
+###
+POST GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest
+Accept: application/json
+Content-Type: application/json
