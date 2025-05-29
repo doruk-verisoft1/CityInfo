@@ -1,12 +1,16 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
 @schema=https
 @hostname=localhost
 @port=7179
 
-### Get all cities
+
 GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
 
-### Create a Point of Interest
-# @name createpoi
+###
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Accept:application/xml
+
+###
 POST {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest
 Accept: application/json
 Content-Type: application/json
@@ -16,7 +20,21 @@ Content-Type: application/json
     "description": "A description for testing"
 }
 
-### Use the created Point of Interest ID
+###
 @poiid = {{createpoi.response.body.id}}
-GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest/{{poiid}}
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest
 Accept: application/json
+
+###
+POST {{schema}}://{{hostname}}:{{port}}/api/authentication/authenticate
+Content-Type: application/json
+
+{
+    "username": "KevinDocx",
+    "password": "This is relatively long sentence that acts as my password"
+}
+
+###
+
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IktldmluIiwiZmFtaWx5X25hbWUiOiJEb2NreCIsImNpdHkiOiJBbnR3ZXJwIiwibmJmIjoxNzQ4NTE5OTc0LCJleHAiOjE3NDg1MjM1NzQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcxNzkiLCJhdWQiOiJjaXR5aW5mb2FwaSJ9.5Lfpd6L3FOghfXkq_ppWmT22cCpdSkXn1jWVIC83l3c
